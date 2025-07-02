@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kauã Duncan | Desenvolvedor Especialista em Conversão</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23FF4500%22>K.</text></svg>">
+
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #1A0A0A;
+            --card-bg: #221010;
+            --border-color: #3B0F17;
+            --highlight-primary: #FF4500;
+            --highlight-secondary: #FF6A00;
+            --text-primary: #FFF3E0;
+            --text-secondary: #FFC07F;
+            --text-mono: 'Space Mono', monospace;
+            --font-main: 'Satoshi', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-image: radial-gradient(circle at 1px 1px, var(--border-color) 1px, transparent 0);
+            background-size: 25px 25px;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        @media(min-width: 992px) {
+            .wrapper {
+                grid-template-columns: 1fr 350px;
+            }
+            main {
+                order: 1;
+            }
+            aside {
+                order: 2;
+            }
+        }
+        
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        @media(min-width: 992px) {
+            aside {
+                position: sticky;
+                top: 4rem; 
+            }
+        }
+        
+        .sidebar-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-family: var(--text-mono);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .profile-about p, .status-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .status-card strong {
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--border-color);
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .contact-cta-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--highlight-secondary), var(--highlight-primary));
+            color: #000;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-cta-button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background-color: var(--border-color);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-link svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--text-secondary);
+            transition: fill 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--highlight-primary);
+            transform: translateY(-3px);
+        }
+
+        .social-link:hover svg {
+            fill: var(--bg-color);
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 .highlight {
+            color: var(--highlight-primary);
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 50ch;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+             border-color: var(--highlight-primary);
+             transform: translateY(-5px);
+        }
+
+        .project-image-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-result {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--highlight-secondary), var(--highlight-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-result strong {
+            font-weight: 700;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .project-tag {
+            background-color: var(--border-color);
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <main>
+            <section class="hero fade-in">
+                <h1>Olá, sou Kauã Duncan.</h1>
+                <p class="subtitle">Desenvolvedor especialista em transformar design em <span class="highlight">Landing Pages e Sites de alta conversão.</span></p>
+            </section>
+
+            <section id="projects" class="fade-in" style="animation-delay: 150ms;">
+                <h2 class="section-title">Projetos em Destaque</h2>
+                <div class="projects-list">
+                    
+                    <a href="https://vinceagencia.com.br/" target="_blank" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-image-wrapper">
+                                <img src="vince.PNG" alt="Imagem do Projeto 1" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Landing Page para Agência</h3>
+                                <p class="project-description">Desenvolvimento de uma LP para agência de marketing, com objetivo de fortalecer a presença digital da agência e valorizar ainda mais os serviços que ela oferece.</p>
+                                <p class="project-result"><strong>+45%</strong> na taxa de conversão</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">WordPress</span>
+                                    <span class="project-tag">Elementor</span>
+                                    <span class="project-tag">CRO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://kauadn.github.io/site-institucional-b2b/" target="_blank" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-image-wrapper">
+                                <img src="converge.PNG" alt="Imagem do Projeto 2" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Site Institucional B2B</h3>
+                                <p class="project-description">Redesenvolvimento completo para uma empresa de tecnologia, com foco em UX e geração de orçamentos.</p>
+                                <p class="project-result"><strong>+30%</strong> em pedidos de orçamento</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">WordPress</span>
+                                    <span class="project-tag">UX/UI</span>
+                                    <span class="project-tag">SEO Técnico</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+        </main>
+
+        <aside class="fade-in" style="animation-delay: 250ms;">
+            <div class="sidebar-card profile-about">
+                <h3 class="sidebar-title">// sobre mim</h3>
+                <p>Aos 19 anos e com 2 de experiência dedicados ao desenvolvimento, meu foco é gerar resultados. Ajudo agências a entregar projetos de alta qualidade de forma 100% remota.</p>
+            </div>
+            
+            <div class="sidebar-card status-card">
+                <h3 class="sidebar-title">// status</h3>
+                <p><strong>Buscando ativamente</strong> novas oportunidades (Freelance ou CLT) com disponibilidade imediata.</p>
+            </div>
+
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">// foco principal (front-end & conversão)</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">WordPress</span>
+                    <span class="skill-tag">Elementor</span>
+                    <span class="skill-tag">CRO</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">SEO</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">// conhecimentos em back-end</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">NestJS</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Prisma</span>
+                    <span class="skill-tag">APIs RESTful</span>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">// redes sociais</h3>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/kauaduncan/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/kauaduncan/" target="_blank" class="social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.359 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.359-.2 6.78-2.618 6.98-6.98.058-1.281.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.359-2.618-6.78-6.98-6.98-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                 <h3 class="sidebar-title">// próximo passo</h3>
+                 <p style="font-size: 0.95rem; margin-bottom: 1rem;">Possui uma vaga ou projeto onde meu perfil se encaixa? Adoraria conversar.</p>
+                 <a href="mailto:kauaduncan@gmail.com" class="contact-cta-button">Vamos Conversar</a>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>
