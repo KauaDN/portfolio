@@ -295,6 +295,78 @@
                 transform: translateY(0);
             }
         }
+
+.project-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden; /* Garantir que o conteúdo que extrapola seja cortado */
+    background-color: #000;
+    position: relative; /* Essencial para posicionar os botões */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* O track deve ocupar 100% da largura do wrapper */
+    height: 100%; /* O track deve ocupar 100% da altura do wrapper */
+}
+
+.carousel-slide {
+    flex-shrink: 0; /* Impede que o slide encolha */
+    width: 100%;    /* Garante que o slide ocupe toda a largura do container */
+    height: 100%;
+    object-fit: cover;
+}
+/* Mantenha os outros estilos do carrossel (.carousel-btn, .carousel-dots, etc.) inalterados */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(26, 10, 10, 0.6);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background-color: var(--highlight-primary);
+    color: #000;
+}
+
+.carousel-btn.prev {
+    left: 1rem;
+}
+
+.carousel-btn.next {
+    right: 1rem;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem 0;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.carousel-dot.active {
+    background-color: var(--highlight-primary);
+    transform: scale(1.2);
+}
     </style>
 </head>
 <body>
@@ -310,6 +382,40 @@
                 <h2 class="section-title">Projetos em Destaque</h2>
                 <div class="projects-list">
                     
+                <div class="project-card" id="conectaking-carousel">
+                    <div class="project-image-wrapper">
+                        <div class="carousel-track">
+                            <img src="conecta.PNG" alt="Conecta King - Página Inicial" class="project-image carousel-slide">
+                            <img src="conecta2.PNG" alt="Conecta King - Painel do Usuário" class="project-image carousel-slide">
+                            <img src="conecta3.PNG" alt="Conecta King - Painel Admin" class="project-image carousel-slide">
+                            <img src="conecta4.PNG" alt="Conecta King - Painel Admin" class="project-image carousel-slide">
+                            <img src="conecta5.PNG" alt="Conecta King - Painel Admin" class="project-image carousel-slide">
+                        </div>
+
+                        <button class="carousel-btn prev" aria-label="Slide Anterior">&#10094;</button>
+                        <button class="carousel-btn next" aria-label="Próximo Slide">&#10095;</button>
+                    </div>
+
+                    <div class="project-content">
+                        <h3 class="project-title">Conecta King (Software as a Service)</h3>
+                        <p class="project-description">Plataforma completa de cartões de visita digitais, desenvolvida com frontend em HTML/CSS/JS puro e backend robusto em Node.js com banco de dados PostgreSQL.</p>
+                        
+                        <div class="carousel-dots"></div>
+
+                        <p class="project-result"><strong>Solução Full-Stack</strong> com Painel Admin e de Cliente</p>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML5</span>
+                            <span class="project-tag">CSS3</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">Express.js</span>
+                            <span class="project-tag">PostgreSQL</span>
+                            <span class="project-tag">API RESTful</span>
+                            <span class="project-tag">JWT</span>
+                        </div>
+                    </div>
+                </div>
+
                     <a href="https://vinceagencia.com.br/" target="_blank" style="text-decoration: none; color: inherit;">
                         <div class="project-card">
                             <div class="project-image-wrapper">
@@ -407,4 +513,58 @@
     </div>
 
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('#conectaking-carousel');
+    if (!carousel) return;
+
+    const track = carousel.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = carousel.querySelector('.next');
+    const prevButton = carousel.querySelector('.prev');
+    const dotsNav = carousel.querySelector('.carousel-dots');
+
+    // Limpa e cria os "dots" de navegação
+    dotsNav.innerHTML = '';
+    slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.classList.add('carousel-dot');
+        if (index === 0) dot.classList.add('active');
+        dotsNav.appendChild(dot);
+    });
+    const dots = Array.from(dotsNav.children);
+
+    let currentIndex = 0;
+
+    // Função para atualizar a UI (mover e ativar/desativar dots)
+    const updateCarousel = (targetIndex) => {
+        // A MÁGICA ESTÁ AQUI: Usamos % para um movimento perfeito
+        track.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        dots[currentIndex].classList.remove('active');
+        dots[targetIndex].classList.add('active');
+        currentIndex = targetIndex;
+    };
+
+    // Eventos de clique para as setas
+    prevButton.addEventListener('click', () => {
+        const targetIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+        updateCarousel(targetIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+        const targetIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+        updateCarousel(targetIndex);
+    });
+
+    // Eventos de clique para os "dots"
+    dotsNav.addEventListener('click', e => {
+        const targetDot = e.target.closest('button.carousel-dot');
+        if (!targetDot) return;
+        
+        const targetIndex = dots.findIndex(dot => dot === targetDot);
+        updateCarousel(targetIndex);
+    });
+});
+</script>
 </html>
